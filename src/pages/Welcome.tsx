@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 import { Feather } from '@expo/vector-icons';
 
 import wateringImg from '../assets/watering.png';
@@ -17,6 +18,12 @@ import fonts from '../styles/fonts';
 import colors from '../styles/colors';
 
 export function Welcome() {
+  const navigation = useNavigation();
+
+  function handleChangePage() {
+    navigation.navigate('UserIdentification');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
@@ -28,7 +35,11 @@ export function Welcome() {
           Don't forget to water your plants anymore. We take care to remind you
           whenever you need
         </Text>
-        <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+        <TouchableOpacity
+          style={styles.button}
+          activeOpacity={0.7}
+          onPress={handleChangePage}
+        >
           <Feather name="chevron-right" style={styles.buttonIcon} />
         </TouchableOpacity>
       </View>
