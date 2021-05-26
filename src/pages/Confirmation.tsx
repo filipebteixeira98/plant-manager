@@ -12,7 +12,7 @@ export function Confirmation() {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.emoji}>😃</Text>
-        <Text style={styles.title}>Ready</Text>
+        <Text style={styles.title}>All right</Text>
         <Text style={styles.subtitle}>
           Now let's start taking care of your plants very carefully
         </Text>
