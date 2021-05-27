@@ -33,9 +33,18 @@ export function PlantSelect() {
   const [environments, setEnvironments] = useState<EnvironmentProps[]>([]);
   const [environmentSelected, setEnvironmentSelected] = useState('all');
   const [plants, setPlants] = useState<PlantProps[]>([]);
+  const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
 
   function handleEnvironmentSelected(environment: string) {
     setEnvironmentSelected(environment);
+
+    if (environment == 'all') return setFilteredPlants(plants);
+
+    const filtered = plants.filter((plant) =>
+      plant.environments.includes(environment)
+    );
+
+    setFilteredPlants(filtered);
   }
 
   useEffect(() => {
@@ -61,6 +70,7 @@ export function PlantSelect() {
       const { data } = await api.get('plants?_sort=name&_order=asc');
 
       setPlants(data);
+      setFilteredPlants(data);
     }
 
     fetchPlants();
@@ -78,7 +88,6 @@ export function PlantSelect() {
           data={environments}
           renderItem={({ item }) => (
             <EnvironmentButton
-              key={item.key}
               title={item.title}
               active={item.key === environmentSelected}
               onPress={() => handleEnvironmentSelected(item.key)}
@@ -91,7 +100,7 @@ export function PlantSelect() {
       </View>
       <View style={styles.plants}>
         <FlatList
-          data={plants}
+          data={filteredPlants}
           renderItem={({ item }) => <PlantCardPrimary data={item} />}
           showsVerticalScrollIndicator={false}
           numColumns={2}
