@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 
 import api from '../services/api';
 
+import { Load } from '../components/Load';
 import { Header } from '../components/Header';
 import { EnvironmentButton } from '../components/EnvironmentButton';
 import { PlantCardPrimary } from '../components/PlantCardPrimary';
@@ -34,6 +35,7 @@ export function PlantSelect() {
   const [environmentSelected, setEnvironmentSelected] = useState('all');
   const [plants, setPlants] = useState<PlantProps[]>([]);
   const [filteredPlants, setFilteredPlants] = useState<PlantProps[]>([]);
+  const [loading, setLoading] = useState(true);
 
   function handleEnvironmentSelected(environment: string) {
     setEnvironmentSelected(environment);
@@ -71,10 +73,13 @@ export function PlantSelect() {
 
       setPlants(data);
       setFilteredPlants(data);
+      setLoading(false);
     }
 
     fetchPlants();
   }, []);
+
+  if (loading) return <Load />;
 
   return (
     <View style={styles.container}>
